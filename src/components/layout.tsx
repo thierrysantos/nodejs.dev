@@ -16,7 +16,7 @@ interface Props {
   img?: string;
   href?: string;
   showFooter?: boolean;
-  location?: any;
+  location?: unknown;
   darkModeController?: DarkModeController;
 }
 
