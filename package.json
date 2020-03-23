@@ -5,9 +5,10 @@
   "author": "Adam Miller <ammiller@linkedin.com>",
   "private": true,
   "dependencies": {
-    "@smotaal.io/dark-mode-controller": "<0.5",
     "@emotion/core": "^10.0.7",
+    "@smotaal.io/dark-mode-controller": "<0.5",
     "@types/react-helmet": "^5.0.7",
+    "@types/react-instantsearch-dom": "5.2.6",
     "algoliasearch": "4.0.3",
     "dotenv": "6.2.0",
     "emotion": "^10.0.7",
