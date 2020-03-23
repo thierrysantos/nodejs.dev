@@ -3,6 +3,7 @@ import React from 'react';
 import logoLight from '../images/logos/nodejs-logo-light-mode.svg';
 import logoDark from '../images/logos/nodejs-logo-dark-mode.svg';
 import defaultDarkModeController from '../util/darkModeController';
+import { Search } from './search';
 
 const activeStyleTab = {
   fontWeight: 'var(--font-weight-semibold)',
