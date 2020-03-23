@@ -10,6 +10,7 @@ package-lock.json
 build
 
 .env
+.env.production
 .firebase/*
 coverage
 .vscode

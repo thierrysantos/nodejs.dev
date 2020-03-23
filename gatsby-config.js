@@ -5,33 +5,9 @@ require("dotenv").config({
 })
 
 const config = require('./src/config');
-
-// const myQuery = `{
-//   allSitePage {
-//     edges {
-//       node {
-//         # try to find a unique id for each node
-//         # if this field is absent, it's going to
-//         # be inserted by Algolia automatically
-//         # and will be less simple to update etc.
-//         objectID: id
-//         component
-//         path
-//         componentChunkName
-//         jsonName
-//         internal {
-//           type
-//           contentDigest
-//           owner
-//         }
-//       }
-//     }
-//   }
-// }`;
-
 const learnQuery = `
 {
-  allMarkdownRemark(filter: {fields: {slug: {ne: ""}}}, sort: {fields: [fileAbsolutePath], order: ASC}) {
+  allMarkdownRemark() {
     edges {
       node {
         frontmatter {
@@ -55,47 +31,6 @@ const queries = [
     indexName: `Learn`,
     query: learnQuery,
     transformer: ({ data }) => flatten(data.allMarkdownRemark.edges),
-
-
-
-
-
-
-
-    // transformer: ({ data }) => {
-    //   // 1. Break each post into an array of searchable text chunks.
-    //   // 2. return a flattened array of all indices
-    //   return data.allMarkdownRemark.edges.reduce((indices, post) => {
-    //     // 1. description (if it exists)
-    //     // 2. Each paragraph
-    //     // console.log(post)
-    //     const pChunks = striptags(post, [], "XXX_SPLIT_HERE_XXX").split(
-    //       "XXX_SPLIT_HERE_XXX"
-    //     )
-    //     console.log(pChunks);
-
-    //     // const chunks = pChunks.map(chnk => {
-    //     //   // console.log(chnk);
-    //     // });
-
-    //     //   ({
-    //     //   slug: post.fields.slug,
-    //     //   title: post.frontmatter.title,
-    //     // }))
-
-    //     // if (post.frontmatter.description) {
-    //     //   chunks.push({
-    //     //     slug: post.fields.slug,
-    //     //     title: post.frontmatter.title,
-    //     //   })
-    //     // }
-
-    //     // const filtered = chunks.filter(chnk => !!chnk.excerpt)
-    //     // console.log('result', ...filtered);
-    //     return [...indices] //...filtered]
-
-    //   }, [])
-    // },
   },
 ]
 

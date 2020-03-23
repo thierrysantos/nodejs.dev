@@ -11,13 +11,18 @@ const SearchPreview = ({ hit }) => {
       //   marginBottom: rhythm(1 / 4),
       // }}
       >
-        <Link style={{ boxShadow: `none` }} to={hit.slug}>
-          <Highlight hit={hit} attribute="title" tagName="mark" />
-        </Link>
+        {/* <Link style={{ boxShadow: `none` }} to='#'> */}
+        <Highlight hit={hit} attribute="title" tagName="mark" />
+        {/* </Link> */}
       </h3>
-      <small>{new Date(hit.date).toLocaleDateString()}</small>
       <p>
-        <Highlight hit={hit} attribute="excerpt" tagName="mark" />
+
+        <Highlight hit={hit} attribute="description" tagName="description" />
+
+
+      </p>
+      <p>
+        <Highlight hit={hit} attribute="html" tagName="html" />
       </p>
     </div>
   )
