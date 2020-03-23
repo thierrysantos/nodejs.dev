@@ -9,6 +9,7 @@
     "@smotaal.io/dark-mode-controller": "<0.5",
     "@types/react-helmet": "^5.0.7",
     "@types/react-instantsearch-dom": "5.2.6",
+    "@typescript-eslint/parser": "2.24.0",
     "algoliasearch": "4.0.3",
     "dotenv": "6.2.0",
     "emotion": "^10.0.7",
@@ -55,7 +56,7 @@
     "test": "yarn lint && yarn jest",
     "test-watch": "yarn jest --watch",
     "test-ci": "yarn test --coverage && codecov",
-    "lint": "eslint . --ext .js,.ts,.tsx",
+    "lint": "eslint src --ext .js,.ts,.tsx",
     "lint:fix": "yarn lint --fix",
     "serve": "yarn build && clear && gatsby serve"
   },
