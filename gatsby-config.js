@@ -1,10 +1,11 @@
 const striptags = require('striptags');
 
-require("dotenv").config({
+require('dotenv').config({
   path: `.env.${process.env.NODE_ENV}`,
-})
+});
 
 const config = require('./src/config');
+
 const learnQuery = `
 {
   allMarkdownRemark() {
@@ -24,15 +25,15 @@ const learnQuery = `
 }`;
 const flatten = arr =>
   arr.map(({ node: { frontmatter } }) => ({
-    ...frontmatter
-  }))
+    ...frontmatter,
+  }));
 const queries = [
   {
     indexName: `Learn`,
     query: learnQuery,
     transformer: ({ data }) => flatten(data.allMarkdownRemark.edges),
   },
-]
+];
 
 module.exports = {
   pathPrefix: process.env.PATH_PREFIX,
@@ -158,15 +159,15 @@ module.exports = {
     {
       resolve: 'gatsby-plugin-emotion',
     },
-    {
-      resolve: 'gatsby-plugin-algolia',
-      options: {
-        appId: '1G9WNEG3D7', //process.env.GATSBY_ALGOLIA_APP_ID,
-        apiKey: '5144fc916038631f8226a6b5acab39b7', //process.env.GATSBY_ALGOLIA_SEARCH_KEY,
-        indexName: 'Learn', //process.env.ALGOLIA_INDEX_NAME,
-        queries,
-        chunkSize: 1000,
-      },
-    },
+    // {
+    //   resolve: 'gatsby-plugin-algolia',
+    //   options: {
+    //     appId: '1G9WNEG3D7', // process.env.GATSBY_ALGOLIA_APP_ID,
+    //     apiKey: '5144fc916038631f8226a6b5acab39b7', // process.env.GATSBY_ALGOLIA_SEARCH_KEY,
+    //     indexName: 'Learn', // process.env.ALGOLIA_INDEX_NAME,
+    //     queries,
+    //     chunkSize: 1000,
+    //   },
+    // },
   ],
 };
