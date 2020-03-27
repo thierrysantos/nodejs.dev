@@ -5,14 +5,14 @@ import SearchPreview from './search-preview';
 
 const searchClient = algoliasearch(
   '1G9WNEG3D7',
-  '53af8a91752f277de63d10195f17483b'
+  '33a157ff5478c676da24bf78913577f6'
 );
 
 export const Search = (): JSX.Element => (
-  <>
+  <div className="ais-InstantSearch">
     <InstantSearch searchClient={searchClient} indexName="Learn">
       <SearchBox />
       <Hits hitComponent={SearchPreview} />
     </InstantSearch>
-  </>
+  </div>
 );

@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { StaticQuery } from 'gatsby';
 import { Highlight } from 'react-instantsearch-dom';
 
 interface SearchPreviewProps {
@@ -13,9 +13,6 @@ const SearchPreview = ({ hit }: SearchPreviewProps): JSX.Element => {
       </h3>
       <p>
         <Highlight hit={hit} attribute="description" tagName="description" />
-      </p>
-      <p>
-        <Highlight hit={hit} attribute="html" tagName="html" />
       </p>
     </>
   );

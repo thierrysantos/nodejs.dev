@@ -1,5 +1,3 @@
-const striptags = require('striptags');
-
 require('dotenv').config({
   path: `.env.${process.env.NODE_ENV}`,
 });
@@ -8,7 +6,7 @@ const config = require('./src/config');
 
 const learnQuery = `
 {
-  allMarkdownRemark() {
+  allMarkdownRemark {
     edges {
       node {
         frontmatter {
@@ -23,6 +21,9 @@ const learnQuery = `
     }
   }
 }`;
+
+// Note we are not able to get HTML because it exceeds the community limit for data.
+// AlgoliaSearchError  Record at the position 38 is too big size=51151 bytes. Contact us if you need an extended quota
 const flatten = arr =>
   arr.map(({ node: { frontmatter } }) => ({
     ...frontmatter,
@@ -31,7 +32,7 @@ const queries = [
   {
     indexName: `Learn`,
     query: learnQuery,
-    transformer: ({ data }) => flatten(data.allMarkdownRemark.edges),
+    transformer: ({ data }) => flatten(data.allMarkdownRemark.edges)
   },
 ];
 
@@ -45,6 +46,16 @@ module.exports = {
     siteUrlNoSlash: config.siteUrlNoSlash,
   },
   plugins: [
+    {
+      resolve: 'gatsby-plugin-algolia',
+      options: {
+        appId: process.env.GATSBY_ALGOLIA_APP_ID,
+        apiKey: process.env.GATSBY_ALGOLIA_ADMIN_KEY,
+        indexName: process.env.ALGOLIA_INDEX_NAME,
+        queries,
+        chunkSize: 1000,
+      },
+    },
     'gatsby-plugin-catch-links',
     'gatsby-plugin-react-helmet',
     {
@@ -67,12 +78,10 @@ module.exports = {
       resolve: 'gatsby-plugin-manifest',
       options: {
         name: config.title,
-        /* eslint-disable @typescript-eslint/camelcase */
-        short_name: config.title,
-        start_url: '/',
-        background_color: config.color,
-        theme_color: config.color,
-        /* eslint-disable @typescript-eslint/camelcase */
+        shortName: config.title,
+        startUrl: config.siteUrlNoSlash,
+        backgroundColor: config.color,
+        themeColor: config.color,
         display: config.display,
         icon: config.icon,
       },
@@ -99,7 +108,7 @@ module.exports = {
             options: {
               classPrefix: 'language-',
               inlineCodeMarker: null,
-              aliases: { js: 'javascript' },
+              aliases: { js: 'javascript', sh: 'shell', txt: 'text' },
               showLineNumbers: false,
               noInlineHighlight: false,
             },
@@ -116,58 +125,12 @@ module.exports = {
     {
       resolve: 'gatsby-plugin-sitemap',
       options: {
-        query: `{
-          site {
-            siteMetadata {
-              siteUrl,
-              siteUrlNoSlash
-            }
-          }
-          allSitePage {
-            edges {
-              node {
-                path
-              }
-            }
-          }
-          allMarkdownRemark {
-            edges {
-              node {
-                fields {
-                  slug
-                }
-              }
-            }
-          }
-        }`,
-        serialize: ({ site, allSitePage, allMarkdownRemark }) => {
-          const sitePages = allSitePage.edges.map(edge => ({
-            url: site.siteMetadata.siteUrlNoSlash + edge.node.path,
-            changefreq: 'daily',
-            priority: 0.7,
-          }));
-          const markdownRemark = allMarkdownRemark.edges.map(edge => ({
-            url: `${site.siteMetadata.siteUrlNoSlash}/${edge.node.fields.slug}`,
-            changefreq: 'daily',
-            priority: 0.7,
-          }));
-
-          return sitePages.concat(markdownRemark);
-        },
+        siteUrl: config.siteUrlNoSlash,
+        output: '/sitemap.xml',
       },
     },
     {
       resolve: 'gatsby-plugin-emotion',
     },
-    // {
-    //   resolve: 'gatsby-plugin-algolia',
-    //   options: {
-    //     appId: '1G9WNEG3D7', // process.env.GATSBY_ALGOLIA_APP_ID,
-    //     apiKey: '5144fc916038631f8226a6b5acab39b7', // process.env.GATSBY_ALGOLIA_SEARCH_KEY,
-    //     indexName: 'Learn', // process.env.ALGOLIA_INDEX_NAME,
-    //     queries,
-    //     chunkSize: 1000,
-    //   },
-    // },
   ],
 };

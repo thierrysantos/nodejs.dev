@@ -1,9 +1,11 @@
-import { Link } from 'gatsby';
+import { Link, StaticQuery, graphql } from 'gatsby';
 import React from 'react';
 import logoLight from '../images/logos/nodejs-logo-light-mode.svg';
 import logoDark from '../images/logos/nodejs-logo-dark-mode.svg';
 import defaultDarkModeController from '../util/darkModeController';
-import { Search } from './search';
+import algoliasearch from 'algoliasearch/lite';
+import { InstantSearch, SearchBox, Hits } from 'react-instantsearch-dom';
+import SearchPreview from './search-preview';
 
 const activeStyleTab = {
   fontWeight: 'var(--font-weight-semibold)',
@@ -14,6 +16,10 @@ const activeStyleTab = {
 interface Props {
   darkModeController?: typeof defaultDarkModeController;
 }
+const searchClient = algoliasearch(
+  '1G9WNEG3D7',
+  '33a157ff5478c676da24bf78913577f6'
+);
 
 const Header = ({
   darkModeController = defaultDarkModeController,
@@ -56,7 +62,12 @@ const Header = ({
 
     <ul className="right-container">
       <li>
-        <Search />
+        <div className="ais-InstantSearch">
+          <InstantSearch searchClient={searchClient} indexName="Learn">
+            <SearchBox />
+            <Hits hitComponent={SearchPreview} />
+          </InstantSearch>
+        </div>
       </li>
       <li className="nav__tabs nav__tabs--right">
         <button
@@ -93,3 +104,22 @@ const Header = ({
 );
 
 export default Header;
+
+export const searchQuery = graphql`
+  query {
+    allMarkdownRemark {
+      edges {
+        node {
+          frontmatter {
+            title
+            description
+          }
+          fields {
+            slug
+          }
+          html
+        }
+      }
+    }
+  }
+`;
