@@ -1,5 +1,4 @@
 import React from 'react';
-import { StaticQuery } from 'gatsby';
 import { Highlight } from 'react-instantsearch-dom';
 
 interface SearchPreviewProps {

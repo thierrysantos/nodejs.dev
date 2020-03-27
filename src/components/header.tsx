@@ -1,10 +1,10 @@
-import { Link, StaticQuery, graphql } from 'gatsby';
+import { Link, graphql } from 'gatsby';
 import React from 'react';
+import algoliasearch from 'algoliasearch/lite';
+import { InstantSearch, SearchBox, Hits } from 'react-instantsearch-dom';
 import logoLight from '../images/logos/nodejs-logo-light-mode.svg';
 import logoDark from '../images/logos/nodejs-logo-dark-mode.svg';
 import defaultDarkModeController from '../util/darkModeController';
-import algoliasearch from 'algoliasearch/lite';
-import { InstantSearch, SearchBox, Hits } from 'react-instantsearch-dom';
 import SearchPreview from './search-preview';
 
 const activeStyleTab = {
