@@ -25,14 +25,15 @@ const learnQuery = `
 // Note we are not able to get HTML because it exceeds the community limit for data.
 // AlgoliaSearchError  Record at the position 38 is too big size=51151 bytes. Contact us if you need an extended quota
 const flatten = arr =>
-  arr.map(({ node: { frontmatter } }) => ({
+  arr.map(({ node: { frontmatter, fields } }) => ({
     ...frontmatter,
+    ...fields,
   }));
 const queries = [
   {
     indexName: `Learn`,
     query: learnQuery,
-    transformer: ({ data }) => flatten(data.allMarkdownRemark.edges)
+    transformer: ({ data }) => flatten(data.allMarkdownRemark.edges),
   },
 ];
 

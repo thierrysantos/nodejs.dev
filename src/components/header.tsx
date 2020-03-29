@@ -1,11 +1,9 @@
 import { Link, graphql } from 'gatsby';
 import React from 'react';
-import algoliasearch from 'algoliasearch/lite';
-import { InstantSearch, SearchBox, Hits } from 'react-instantsearch-dom';
 import logoLight from '../images/logos/nodejs-logo-light-mode.svg';
 import logoDark from '../images/logos/nodejs-logo-dark-mode.svg';
 import defaultDarkModeController from '../util/darkModeController';
-import SearchPreview from './search-preview';
+import { Search } from './search';
 
 const activeStyleTab = {
   fontWeight: 'var(--font-weight-semibold)',
@@ -16,10 +14,6 @@ const activeStyleTab = {
 interface Props {
   darkModeController?: typeof defaultDarkModeController;
 }
-const searchClient = algoliasearch(
-  '1G9WNEG3D7',
-  '33a157ff5478c676da24bf78913577f6'
-);
 
 const Header = ({
   darkModeController = defaultDarkModeController,
@@ -63,10 +57,7 @@ const Header = ({
     <ul className="right-container">
       <li>
         <div className="ais-InstantSearch">
-          <InstantSearch searchClient={searchClient} indexName="Learn">
-            <SearchBox />
-            <Hits hitComponent={SearchPreview} />
-          </InstantSearch>
+          <Search />
         </div>
       </li>
       <li className="nav__tabs nav__tabs--right">

@@ -8,9 +8,8 @@
     "@emotion/core": "^10.0.7",
     "@smotaal.io/dark-mode-controller": "<0.5",
     "@types/react-helmet": "^5.0.7",
-    "@types/react-instantsearch-dom": "5.2.6",
-    "@typescript-eslint/parser": "2.24.0",
-    "algoliasearch": "4.0.3",
+    "@types/react-instantsearch-dom": "6.3.0",
+    "algoliasearch": "4.1.0",
     "dotenv": "6.2.0",
     "emotion": "^10.0.7",
     "emotion-server": "^10.0.7",
@@ -37,8 +36,7 @@
     "react-dom": "^16.8.0",
     "react-emotion": "^10.0.0",
     "react-helmet": "^5.2.0",
-    "react-instantsearch-dom": "6.3.0",
-    "striptags": "3.1.1"
+    "react-instantsearch-dom": "6.3.0"
   },
   "keywords": [
     "gatsby",
@@ -85,7 +83,8 @@
     "jest": "^24.1.0",
     "prettier": "^1.16.4",
     "react-test-renderer": "^16.8.2",
-    "typescript": "~3.2.1"
+    "typescript": "~3.2.1",
+    "@typescript-eslint/parser": "2.24.0"
   },
   "repository": {
     "type": "git",
