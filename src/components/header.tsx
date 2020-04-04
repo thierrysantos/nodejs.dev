@@ -1,4 +1,4 @@
-import { Link, graphql } from 'gatsby';
+import { Link } from 'gatsby';
 import React from 'react';
 import logoLight from '../images/logos/nodejs-logo-light-mode.svg';
 import logoDark from '../images/logos/nodejs-logo-dark-mode.svg';
@@ -95,22 +95,3 @@ const Header = ({
 );
 
 export default Header;
-
-export const searchQuery = graphql`
-  query {
-    allMarkdownRemark {
-      edges {
-        node {
-          frontmatter {
-            title
-            description
-          }
-          fields {
-            slug
-          }
-          html
-        }
-      }
-    }
-  }
-`;

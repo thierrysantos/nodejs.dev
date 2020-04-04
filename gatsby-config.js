@@ -1,8 +1,9 @@
-require('dotenv').config({
-  path: `.env.${process.env.NODE_ENV}`,
-});
+require('dotenv').config({path: `.env.${process.env.NODE_ENV}`});
+
+process.env.ALGOLIA_CONFIG && require('dotenv').config({path: process.env.ALGOLIA_CONFIG});
 
 const config = require('./src/config');
+const algoliaConfig = require('./src/config/algolia');
 
 const learnQuery = `
 {
@@ -25,15 +26,15 @@ const learnQuery = `
 // Note we are not able to get HTML because it exceeds the community limit for data.
 // AlgoliaSearchError  Record at the position 38 is too big size=51151 bytes. Contact us if you need an extended quota
 const flatten = arr =>
-  arr.map(({ node: { frontmatter, fields } }) => ({
+  arr.map(({node: {frontmatter, fields}}) => ({
     ...frontmatter,
     ...fields,
   }));
 const queries = [
   {
-    indexName: `Learn`,
+    indexName: `${algoliaConfig.indexPrefix}_Learn`,
     query: learnQuery,
-    transformer: ({ data }) => flatten(data.allMarkdownRemark.edges),
+    transformer: ({data}) => flatten(data.allMarkdownRemark.edges),
   },
 ];
 
@@ -45,14 +46,17 @@ module.exports = {
     featuredImage: config.featuredImage,
     siteUrl: config.siteUrl,
     siteUrlNoSlash: config.siteUrlNoSlash,
+    algoliaAppId: algoliaConfig.appId,
+    algoliaAPIKey: algoliaConfig.apiKey,
+    algoliaIndexPrefix: algoliaConfig.indexPrefix,
   },
   plugins: [
     {
       resolve: 'gatsby-plugin-algolia',
       options: {
-        appId: process.env.GATSBY_ALGOLIA_APP_ID,
-        apiKey: process.env.GATSBY_ALGOLIA_ADMIN_KEY,
-        indexName: process.env.ALGOLIA_INDEX_NAME,
+        appId: algoliaConfig.appId,
+        apiKey: algoliaConfig.adminKey,
+        indexName: `${algoliaConfig.indexPrefix}`,
         queries,
         chunkSize: 1000,
       },
@@ -109,7 +113,7 @@ module.exports = {
             options: {
               classPrefix: 'language-',
               inlineCodeMarker: null,
-              aliases: { js: 'javascript', sh: 'shell', txt: 'text' },
+              aliases: {js: 'javascript', sh: 'shell', txt: 'text'},
               showLineNumbers: false,
               noInlineHighlight: false,
             },

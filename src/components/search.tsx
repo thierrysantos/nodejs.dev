@@ -1,24 +1,29 @@
 /* eslint-disable react/destructuring-assignment */
 import React from 'react';
-import algoliasearch from 'algoliasearch/lite';
-import {
-  InstantSearch,
-  SearchBox,
-  Hits,
-  Pagination,
-  Highlight,
-} from 'react-instantsearch-dom';
+import createAlgoliaSearchClient, {
+  SearchClient as AlgoliaSearchClient,
+} from 'algoliasearch/lite';
+import { graphql, StaticQuery } from 'gatsby';
+
+import { InstantSearch, SearchBox, Hits } from 'react-instantsearch-dom';
 import '../styles/search.css';
 import SearchPreview from './search-preview';
 
-const algoliaClient = algoliasearch(
-  '1G9WNEG3D7',
-  '283f0a770d5544c57cdb9085b5c3ff8d'
-);
+const createSearchClient = (
+  algoliaConfig: Search.AlgoliaConfig
+): Search.SearchClient => ({
+  algoliaSearchClient: (algoliaConfig.algoliaAppId &&
+    algoliaConfig.algoliaAPIKey &&
+    createAlgoliaSearchClient(
+      algoliaConfig.algoliaAppId,
+      algoliaConfig.algoliaAPIKey
+    )) as AlgoliaSearchClient,
 
-const searchClient = {
+  // @ts-ignore
   search(requests) {
-    if (requests.every(({ params }) => !params.query)) {
+    if (!this.algoliaSearchClient) return;
+
+    if (requests.every(({ params }: any) => !params.query)) {
       return Promise.resolve({
         results: requests.map(() => ({
           hits: [],
@@ -29,19 +34,54 @@ const searchClient = {
       });
     }
 
-    return algoliaClient.search(requests);
+    return this.algoliaSearchClient.search(requests);
   },
-};
+});
 
-export const Search = (): JSX.Element => (
-  <div className="container">
-    <div>
-      <InstantSearch searchClient={searchClient} indexName="Learn">
-        {/* <SearchBox className="searchbox" /> */}
-        <div style={{ position: 'absolute', backgroundColor: 'red' }}>
-          <Hits hitComponent={SearchPreview} />
+const Search = (): JSX.Element => (
+  <StaticQuery
+    query={graphql`
+      query {
+        site {
+          siteMetadata {
+            algoliaAppId
+            algoliaAPIKey
+            algoliaIndexPrefix
+          }
+        }
+      }
+    `}
+    render={({
+      site: { siteMetadata: algoliaConfig },
+    }: Search.AlgoliaQuery) => (
+      <div className="container">
+        <div>
+          <InstantSearch
+            searchClient={createSearchClient(algoliaConfig)}
+            indexName={`${algoliaConfig.algoliaIndexPrefix}_Learn`}
+          >
+            <SearchBox className="searchbox" />
+            <div style={{ position: 'sticky', backgroundColor: 'red' }}>
+              <Hits hitComponent={SearchPreview} />
+            </div>
+          </InstantSearch>
         </div>
-      </InstantSearch>
-    </div>
-  </div>
+      </div>
+    )}
+  />
 );
+
+declare namespace Search {
+  export type AlgoliaConfig = Record<
+    'algoliaAppId' | 'algoliaAPIKey' | 'algoliaIndexPrefix',
+    string
+  >;
+  export interface SearchClient extends Pick<AlgoliaSearchClient, 'search'> {
+    algoliaSearchClient?: SearchClient;
+  }
+  export interface AlgoliaQuery {
+    site: { siteMetadata: AlgoliaConfig };
+  }
+}
+
+export { Search };

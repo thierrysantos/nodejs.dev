@@ -51,3 +51,11 @@ export interface SentinelObserverSetupOptions {
   headerRootMargin?: string;
   footerRootMargin?: string;
 }
+
+declare global {
+  namespace JSX {
+    interface IntrinsicAttributes {
+      className?: string;
+    }
+  }
+}

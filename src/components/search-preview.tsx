@@ -1,6 +1,6 @@
 import React from 'react';
 import { Highlight } from 'react-instantsearch-dom';
-import { Link } from 'gatsby';
+// import { Link } from 'gatsby';
 
 interface SearchPreviewProps {
   hit: string;
@@ -14,7 +14,7 @@ const SearchPreview = ({ hit }: SearchPreviewProps): JSX.Element => {
         <Highlight hit={hit} attribute="title" tagName="mark" />
       </h3>
       <p>
-        <Highlight hit={hit} attribute="description" tagName="description" />
+        <Highlight hit={hit} attribute="description" tagName="span" />
       </p>
     </>
   );
