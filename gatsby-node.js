@@ -3,8 +3,29 @@
 const path = require('path');
 const createSlug = require('./src/util/createSlug');
 
-exports.createPages = ({ graphql, actions }) => {
-  const { createPage } = actions;
+exports.createSchemaCustomization = ({actions}) => {
+  const {createTypes} = actions;
+  const typeDefs = `
+    type Site implements Node {
+      siteMetadata: SiteSiteMetadata!
+    }
+
+    type SiteSiteMetadata {
+      title: String!
+      description: String!
+      featuredImage: String!
+      siteUrl: String!
+      siteUrlNoSlash: String!
+      algoliaAppId: String
+      algoliaAPIKey: String
+      algoliaIndexPrefix: String
+    }
+  `;
+  createTypes(typeDefs);
+};
+
+exports.createPages = ({graphql, actions}) => {
+  const {createPage} = actions;
 
   return new Promise((resolve, reject) => {
     const docTemplate = path.resolve('./src/templates/learn.tsx');
