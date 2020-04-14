@@ -10,11 +10,3 @@ exports.indexPrefix = `${process.env.ALGOLIA_INDEX_PREFIX ||
   process.env.GATSBY_ALGOLIA_INDEX_PREFIX ||
   exports.indexName ||
   `NodeJS_DEV`}`.replace(/_$/, '');
-
-// exports.indexName = `${exports.indexPrefix}/`;
-// exports.indexNames = {
-//   learn: `${exports.indexPrefix}/learn/`,
-//   docs: `${exports.indexPrefix}/docs/`,
-//   download: `${exports.indexPrefix}/download/`,
-//   blog: `${exports.indexPrefix}/blog/`,
-// };
