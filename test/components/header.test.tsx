@@ -1,10 +1,10 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import {StaticQuery} from 'gatsby';
+import { StaticQuery } from 'gatsby';
 import Header from '../../src/components/header';
 
 beforeEach(() => {
-  (StaticQuery as any).mockImplementationOnce(({render}: any) =>
+  (StaticQuery as any).mockImplementationOnce(({ render }: any) =>
     render({
       site: {
         siteMetadata: {
@@ -13,7 +13,7 @@ beforeEach(() => {
           algoliaIndexPrefix: undefined,
         },
       },
-    }),
+    })
   );
 });
 

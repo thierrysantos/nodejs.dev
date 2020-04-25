@@ -3,8 +3,8 @@
 const path = require('path');
 const createSlug = require('./src/util/createSlug');
 
-exports.createSchemaCustomization = ({actions}) => {
-  const {createTypes} = actions;
+exports.createSchemaCustomization = ({ actions }) => {
+  const { createTypes } = actions;
   const typeDefs = `
     type Site implements Node {
       siteMetadata: SiteSiteMetadata!
@@ -24,8 +24,8 @@ exports.createSchemaCustomization = ({actions}) => {
   createTypes(typeDefs);
 };
 
-exports.createPages = ({graphql, actions}) => {
-  const {createPage} = actions;
+exports.createPages = ({ graphql, actions }) => {
+  const { createPage } = actions;
 
   return new Promise((resolve, reject) => {
     const docTemplate = path.resolve('./src/templates/learn.tsx');
