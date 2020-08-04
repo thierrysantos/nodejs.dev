@@ -25,7 +25,6 @@ There is a built-in commit linter. Basic rules:
 
 * All changes must come in a PR
 * All changes must be reviewed by a member of @nodejs/nodejs.dev,
-  @nodejs/website, or @nodejs/website-redesign
 * Pull Requests must be open for at least 48 hours unless included in the special exemptions section below
 
 ### Special Exemptions
@@ -56,7 +55,7 @@ In the case of an objection being raised in a pull request by another collaborat
 
 ## Getting Started
 
-For feature development you should be working from the staging branch.
+For feature development you should be working from the master branch.
 
 * Fork
 * Clone your fork `git clone git@github.com:<githubid>/nodejs.dev.git`
@@ -84,6 +83,5 @@ By making a contribution to this project, I certify that:
   a record of the contribution (including all personal information I submit with it,
   including my sign-off) is maintained indefinitely and may be redistributed consistent
   with this project or the open source license(s) involved.
-
 [conventional commits]: https://www.conventionalcommits.org/
 [`squash`]: https://help.github.com/en/articles/about-pull-request-merges#squash-and-merge-your-pull-request-commits
